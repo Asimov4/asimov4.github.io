@@ -1,23 +1,54 @@
 <!DOCTYPE html>
-
-<!--
-    This is an HTML page that contains a CSS and a Javascript file.
-    
-    Run this sample by clicking the 'Preview' button on top;
-    a new tab will open with the current page open.
--->
-<html lang="en">
+<!--[if lt IE 7]><html class="lt-ie10 lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="lt-ie10 lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="lt-ie10 lt-ie9"> <![endif]-->
+<!--[if IE 9]><html class="lt-ie10"> <![endif]-->
+<!--[if gt IE 9]><!--> <html> <!--<![endif]-->
     <head>
-        <meta charset="utf-8" />
-        <title>Hello world from Cloud9!</title>
-        <link rel="stylesheet" href="css/main.css" type="text/css"/>
+        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     </head>
-    
-    <body>
-        <h1>Hello world!</h1>
-        <p class="tagline"></p>
-        
-        <!-- load scripts at the bottom of your page -->
-        <script src="js/site.js"></script>
+ <div class="container" ng-app>
+    <h2>Extract Regex</h2>
+
+    <div ng-controller="ExtractCtrl">
+        <form ng-submit="extractRegexFromText()" role="form">
+            <fieldset>
+                <div class="form-group">
+                    <label>Regex to extract</label>
+                    <input class="form-control" type="text" size="30" ng-model="regexToExtract">
+                </div>
+                <div class="form-group">
+                    <label>Text to parse</label>
+                    <textarea class="form-control" ng-model="textToParse" cols="40" placeholder="Text to parse"></textarea>
+                </div>
+                <input class="btn-primary" type="submit" value="extract">
+            </fieldset>
+        </form>
+        <span>{{matches.length}} matches</span>
+
+        <ul class="unstyled">
+            <li ng-repeat="match in matches">
+                <span>{{match}}</span>
+            </li>
+        </ul>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+
+<script>
+function ExtractCtrl($scope) {
+    $scope.matches = [];
+    $scope.regexToExtract = "\\d+";
+    $scope.textToParse = "(206) 913-2250 (206) 933-6000 (206) 324-4140";
+
+    $scope.extractRegexFromText = function () {
+        var pattern = new RegExp($scope.regexToExtract, "g");
+        $scope.matches = $scope.textToParse.match(pattern);
+        console.log($scope.matches);
+    }
+}
+</script>
     </body>
 </html>
